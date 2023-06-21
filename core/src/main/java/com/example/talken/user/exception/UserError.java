@@ -12,6 +12,7 @@ public enum UserError {
 
     USER_NOT_FOUND(HttpStatus.NOT_FOUND,"등록된 사용자가 없습니다."),
     DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, "중복된 이메일이 존재합니다."),
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.")
     ;
 
     private final HttpStatus status;

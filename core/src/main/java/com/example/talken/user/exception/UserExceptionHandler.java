@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-//@RestControllerAdvice(basePackages = {"com.example.talken.user.controller"})
+@RestControllerAdvice(basePackages = {"com.example.talken.user"})
 public class UserExceptionHandler {
 
     @ExceptionHandler(UserException.class)
