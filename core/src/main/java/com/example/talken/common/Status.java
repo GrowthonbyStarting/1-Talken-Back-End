@@ -13,4 +13,13 @@ public class Status {
         DELETED,
         ;
     }
+    public enum Resume {
+        PUBLIC,
+        PRIVATE
+    }
+
+    public enum Feedback {
+        WANTED,
+        NOTWANTED
+    }
 }
