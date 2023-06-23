@@ -1,4 +1,4 @@
-package com.example.talken.common;
+package com.example.talken.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;

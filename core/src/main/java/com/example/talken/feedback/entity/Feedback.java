@@ -1,6 +1,6 @@
 package com.example.talken.feedback.entity;
 
-import com.example.talken.common.BaseEntity;
+import com.example.talken.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

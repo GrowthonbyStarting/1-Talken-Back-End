@@ -6,10 +6,7 @@ import com.example.talken.feedback.dto.FeedbackResponseDto;
 import com.example.talken.feedback.service.FeedbackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +15,9 @@ public class FeedbackController {
 
     private final FeedbackService feedbackService;
 
-    @PostMapping("")
-    public Response<FeedbackResponseDto> createFeedback(@RequestBody FeedbackRequestDto requestDto) {
+    @PostMapping("/{resumeId}")
+    public Response<FeedbackResponseDto> createFeedback(@PathVariable Long resumeId,
+                                                        @RequestBody FeedbackRequestDto requestDto) {
         feedbackService.createFeedback(requestDto);
 
         return Response.<FeedbackResponseDto>builder()

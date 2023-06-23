@@ -3,6 +3,7 @@ package com.example.talken.user;
 import com.example.talken.common.Response;
 import com.example.talken.user.dto.UserRequestDto;
 import com.example.talken.user.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Response<Void> login(@RequestBody UserRequestDto.Login request) {
-        userService.login(request);
+    public Response<Void> login(@RequestBody UserRequestDto.Login request, HttpServletResponse response) {
+        userService.login(request, response);
 
         return Response.<Void>builder()
                 .code(HttpStatus.OK.value())
