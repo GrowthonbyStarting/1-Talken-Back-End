@@ -43,9 +43,11 @@ public class WebSecurityConfig {
                 .and()
                 .csrf().disable();
 
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeHttpRequests()
+        http
+                .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
                 .requestMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
