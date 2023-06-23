@@ -27,36 +27,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-      ## create application-dev.yaml
-    - name: make application-dev.yaml
-      run: |
-        ## create application-dev.yaml
-        cd ./src/main/resources
-
-        touch ./application-dev.yaml
-        
-        echo "${{ secrets.DATABASE }}" >> ./application-dev.yaml
-        shell: bash  
-
     - name: Build with Gradle
-      run: ./gradlew bootJar
-
-    - name: web docker build and push
-      run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -t ${{ secrets.DOCKER_REPO }}/talken .
-        docker push ${{ secrets.DOCKER_REPO }}/talken
-
-      ## docker compose up
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
+      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
-        host: ${{ secrets.HOST }}
-        username: ubuntu
-        key: ${{ secrets.KEY }}
-        script: |
-          sudo docker rm -f $(docker ps -qa)
-          sudo docker pull ${{ secrets.DOCKER_REPO }}/talken
-          sudo docker pull ${{ secrets.DOCKER_REPO }}/talken-nginx
-          docker-compose up -d
-          docker image prune -f
+        arguments: build
