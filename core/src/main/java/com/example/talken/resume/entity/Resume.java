@@ -25,7 +25,7 @@ public class Resume {
     private String childCategory;
 
     @Column
-    private String imageURl;
+    private String imageUrl;
 
     @Column(nullable = false)
     private Status.Resume publicStatus;
@@ -38,12 +38,12 @@ public class Resume {
     private User user;
 
     @Builder
-    public Resume(String parentCategory, String childCategory, String imageURl,
+    public Resume(String parentCategory, String childCategory, String imageUrl,
                   Status.Resume publicStatus, Status.Feedback feedbackStatus, User user) {
 
         this.parentCategory = parentCategory;
         this.childCategory = childCategory;
-        this.imageURl = imageURl;
+        this.imageUrl = imageUrl;
         this.publicStatus = publicStatus;
         this.feedbackStatus = feedbackStatus;
         this.user = user;
