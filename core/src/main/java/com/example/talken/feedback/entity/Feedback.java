@@ -30,7 +30,9 @@ public class Feedback extends BaseEntity {
     private Resume resume;
 
     @Builder
-    public Feedback(String content) {
+    public Feedback(String content, User user, Resume resume) {
         this.content = content;
+        this.user = user;
+        this.resume = resume;
     }
 }
