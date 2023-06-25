@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,7 +19,16 @@ public class Resume {
     private Long id;
 
     @Column(nullable = false)
-    private Status.Resume isPublic;
+    private String parentCategory;
+
+    @Column(nullable = false)
+    private String childCategory;
+
+    @Column
+    private String imageUrl;
+
+    @Column(nullable = false)
+    private Status.Resume publicStatus;
 
     @Column(nullable = false)
     private Status.Feedback feedbackStatus;
@@ -28,8 +38,13 @@ public class Resume {
     private User user;
 
     @Builder
-    public Resume(Status.Resume isPublic, Status.Feedback feedbackStatus, User user) {
-        this.isPublic = isPublic;
+    public Resume(String parentCategory, String childCategory, String imageUrl,
+                  Status.Resume publicStatus, Status.Feedback feedbackStatus, User user) {
+
+        this.parentCategory = parentCategory;
+        this.childCategory = childCategory;
+        this.imageUrl = imageUrl;
+        this.publicStatus = publicStatus;
         this.feedbackStatus = feedbackStatus;
         this.user = user;
     }
