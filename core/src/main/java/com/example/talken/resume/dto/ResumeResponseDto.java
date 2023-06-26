@@ -25,6 +25,10 @@ public class ResumeResponseDto {
 
     public static ResumeResponseDto fromEntity(Resume resume) {
         return ResumeResponseDto.builder()
+                .parentCategory(resume.getParentCategory())
+                .childCategory(resume.getChildCategory())
+                .imageUrl(resume.getImageUrl())
+                .username(resume.getUser().getUsername())
                 .build();
     }
 }
