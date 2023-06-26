@@ -7,10 +7,19 @@ import lombok.Getter;
 @Getter
 public class ResumeResponseDto {
 
+    private String parentCategory;
+    private String childCategory;
+    private String imageUrl;
     private String username;
 
+
     @Builder
-    public ResumeResponseDto(String username) {
+    public ResumeResponseDto(String parentCategory, String childCategory,
+                             String imageUrl, String username) {
+
+        this.parentCategory = parentCategory;
+        this.childCategory = childCategory;
+        this.imageUrl = imageUrl;
         this.username = username;
     }
 

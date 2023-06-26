@@ -1,6 +1,7 @@
 package com.example.talken.user.entity;
 
 import com.example.talken.common.Status;
+import com.example.talken.resume.entity.Resume;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -43,9 +44,12 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Status.User isDeleted;
 
+    @OneToOne
+    private Resume resume;
+
     @Builder
-    public User(String email, String username, String password, String phone,
-                String role, Status.Auth isAuthenticated, Status.User isDeleted) {
+    public User(String email, String username, String password, String phone, String role,
+                Status.Auth isAuthenticated, Status.User isDeleted, Resume resume) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -53,6 +57,7 @@ public class User {
         this.role = role;
         this.isAuthenticated = isAuthenticated;
         this.isDeleted = isDeleted;
+        this.resume = resume;
     }
 
 }
