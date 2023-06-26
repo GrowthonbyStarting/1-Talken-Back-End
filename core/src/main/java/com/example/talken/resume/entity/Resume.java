@@ -1,6 +1,7 @@
 package com.example.talken.resume.entity;
 
 import com.example.talken.common.Status;
+import com.example.talken.common.entity.BaseEntity;
 import com.example.talken.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Resume {
+public class Resume extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +29,14 @@ public class Resume {
     private String imageUrl;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private Status.Resume publicStatus;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private Status.Feedback feedbackStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "resume")
     private User user;
 
     @Builder

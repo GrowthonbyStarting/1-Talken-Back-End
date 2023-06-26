@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @Getter
 @Builder
@@ -20,4 +21,13 @@ public class Response<T> {
     String message = HttpStatus.OK.getReasonPhrase();
 
     T data;
+
+    public ResponseEntity<Response<T>> response(Integer code, T data) {
+        return ResponseEntity
+                .status(code)
+                .body(Response.<T>builder()
+                        .data(data)
+                        .build()
+                );
+    }
 }
