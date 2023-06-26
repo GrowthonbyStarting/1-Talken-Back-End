@@ -3,6 +3,7 @@ package com.example.talken.user.dto;
 import com.example.talken.common.CommonConstant;
 import com.example.talken.common.Status;
 import com.example.talken.user.entity.User;
+import com.example.talken.user.entity.UserRole;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
@@ -32,7 +33,7 @@ public class UserRequestDto {
         String phone;
 
         @NotNull
-        String role;
+        UserRole role;
 
         public User toEntity(Status.Auth isAuthenticated, Status.User isDeleted) {
             return User.builder()

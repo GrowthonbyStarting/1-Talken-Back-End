@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class ResumeService {
     private final UserRepository userRepository;
 
     public ResumeResponseDto createResume(ResumeRequestDto request, UserDetailsImpl userDetails) {
-        User user = validateUser(userDetails);
+        User user = validateUser(userDetails.getUser());
 
         Resume resume = request.toEntity(publicStatus, feedbackStatus, user);
         resumeRepository.save(resume);
@@ -39,7 +38,7 @@ public class ResumeService {
     }
 
     public ResumeListResponseDto readResumeList(UserDetailsImpl userDetails) {
-        validateUser(userDetails);
+        validateUser(userDetails.getUser());
 
         Status.Resume publicStatus = Status.Resume.PUBLIC;
         List<Resume> resumeList = resumeRepository.findAllByPublicStatus(publicStatus);
@@ -54,9 +53,8 @@ public class ResumeService {
                 .build();
     }
 
-    private User validateUser(UserDetailsImpl userDetails) {
-        String email = userDetails.getUser().getEmail();
-        return userRepository.findByEmail(email)
+    private User validateUser(User user) {
+        return userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new ResumeException(ResumeError.INVALID_USER));
     }
 

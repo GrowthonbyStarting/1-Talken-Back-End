@@ -33,8 +33,8 @@ public class User {
     private String phone;
 
     @Column(nullable = false)
-//    @Enumerated(value = EnumType.STRING)
-    private String role;
+    @Enumerated(value = EnumType.STRING)
+    private UserRole role;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -44,12 +44,9 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Status.User isDeleted;
 
-    @OneToOne
-    private Resume resume;
-
     @Builder
-    public User(String email, String username, String password, String phone, String role,
-                Status.Auth isAuthenticated, Status.User isDeleted, Resume resume) {
+    public User(String email, String username, String password, String phone, UserRole role,
+                Status.Auth isAuthenticated, Status.User isDeleted) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -57,7 +54,6 @@ public class User {
         this.role = role;
         this.isAuthenticated = isAuthenticated;
         this.isDeleted = isDeleted;
-        this.resume = resume;
     }
 
 }

@@ -36,7 +36,8 @@ public class Resume extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Status.Feedback feedbackStatus;
 
-    @OneToOne(mappedBy = "resume")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Builder

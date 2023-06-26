@@ -15,15 +15,10 @@ public class Status {
     }
     public enum Resume {
 
-        PUBLIC("PUBLIC"),
-        PRIVATE("PRIVATE"),
+        PUBLIC,
+        PRIVATE,
         ;
 
-        String publicStatus;
-
-        Resume(String publicStatus) {
-            this.publicStatus = publicStatus;
-        }
     }
 
     public enum Feedback {
