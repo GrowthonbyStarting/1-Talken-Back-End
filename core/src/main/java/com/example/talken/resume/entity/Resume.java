@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 @Entity
@@ -36,9 +39,12 @@ public class Resume extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Status.Feedback feedbackStatus;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "resume")
+    private List<ProfileImage> images = new ArrayList<>();
 
     @Builder
     public Resume(String parentCategory, String childCategory, String imageUrl,
