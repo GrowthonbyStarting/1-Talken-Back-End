@@ -1,7 +1,6 @@
 package com.example.talken.user.entity;
 
 import com.example.talken.common.Status;
-import com.example.talken.resume.entity.Resume;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

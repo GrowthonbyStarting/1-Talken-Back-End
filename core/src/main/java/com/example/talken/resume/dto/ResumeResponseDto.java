@@ -4,22 +4,24 @@ import com.example.talken.resume.entity.Resume;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class ResumeResponseDto {
 
     private String parentCategory;
     private String childCategory;
-    private String imageUrl;
+    private List<String> imageUrls;
     private String username;
 
 
     @Builder
     public ResumeResponseDto(String parentCategory, String childCategory,
-                             String imageUrl, String username) {
+                             List<String> imageUrls, String username) {
 
         this.parentCategory = parentCategory;
         this.childCategory = childCategory;
-        this.imageUrl = imageUrl;
+        this.imageUrls = imageUrls;
         this.username = username;
     }
 
@@ -27,7 +29,6 @@ public class ResumeResponseDto {
         return ResumeResponseDto.builder()
                 .parentCategory(resume.getParentCategory())
                 .childCategory(resume.getChildCategory())
-                .imageUrl(resume.getImageUrl())
                 .username(resume.getUser().getUsername())
                 .build();
     }
