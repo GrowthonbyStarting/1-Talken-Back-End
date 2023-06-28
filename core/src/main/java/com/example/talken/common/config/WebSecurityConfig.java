@@ -41,17 +41,17 @@ public class WebSecurityConfig {
         http
                 .cors()
                 .and()
-                .csrf().disable();
-
-        http
+                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
                 .requestMatchers("/users/**").permitAll()
-                .anyRequest().authenticated()
-                .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .anyRequest().authenticated();
+
+        http
+                .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

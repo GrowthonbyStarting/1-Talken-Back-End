@@ -19,6 +19,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private Long kakaoId;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -44,8 +47,9 @@ public class User {
     private Status.User isDeleted;
 
     @Builder
-    public User(String email, String username, String password, String phone, UserRole role,
-                Status.Auth isAuthenticated, Status.User isDeleted) {
+    public User(Long kakaoId, String email, String username, String password, String phone,
+                UserRole role, Status.Auth isAuthenticated, Status.User isDeleted) {
+        this.kakaoId = kakaoId;
         this.email = email;
         this.username = username;
         this.password = password;
@@ -55,4 +59,8 @@ public class User {
         this.isDeleted = isDeleted;
     }
 
+    public User update(String username) {
+        this.username = username;
+        return this;
+    }
 }
