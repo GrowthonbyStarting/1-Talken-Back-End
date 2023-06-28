@@ -1,10 +1,14 @@
 package com.example.talken.image.entity;
 
+import com.example.talken.resumeImage.entity.ResumeImage;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
