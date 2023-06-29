@@ -45,13 +45,13 @@ public class ResumeController {
 
     }
 
-    @GetMapping("/api/users/resumes/{userId}")
-    public ResponseEntity<Response<ResumeDetailResponseDto>> readResumeByUserId(@PathVariable Long userId,
-                                                                                @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @GetMapping("/api/users/resumes/{resumeId}")
+    public ResponseEntity<Response<ResumeDetailResponseDto>> readResume(@PathVariable Long resumeId,
+                                                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity
                 .status(HttpStatus.OK.value())
                 .body(Response.<ResumeDetailResponseDto>builder()
-                        .data(resumeService.readResumeByUserId(userDetails))
+                        .data(resumeService.readResumeByUserId(resumeId, userDetails))
                         .build());
     }
 

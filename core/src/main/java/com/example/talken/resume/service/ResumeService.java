@@ -71,10 +71,10 @@ public class ResumeService {
                 .build();
     }
 
-    public ResumeDetailResponseDto readResumeByUserId(UserDetailsImpl userDetails) {
-        User user = validateUser(userDetails.getUser());
+    public ResumeDetailResponseDto readResumeByUserId(Long resumeId, UserDetailsImpl userDetails) {
+        validateUser(userDetails.getUser());
 
-        Resume resume = resumeRepository.findByUserId(user.getId())
+        Resume resume = resumeRepository.findById(resumeId)
                 .orElseThrow(() -> new ResumeException(ResumeError.RESUME_NOT_FOUND));
         ResumeResponseDto resumeResponse = ResumeResponseDto.fromEntity(resume);
 
