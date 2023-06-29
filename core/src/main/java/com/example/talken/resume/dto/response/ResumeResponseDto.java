@@ -1,4 +1,4 @@
-package com.example.talken.resume.dto;
+package com.example.talken.resume.dto.response;
 
 import com.example.talken.resume.entity.Resume;
 import lombok.Builder;
@@ -11,17 +11,13 @@ public class ResumeResponseDto {
 
     private String parentCategory;
     private String childCategory;
-    private List<String> imageUrls;
     private String username;
 
 
     @Builder
-    public ResumeResponseDto(String parentCategory, String childCategory,
-                             List<String> imageUrls, String username) {
-
+    public ResumeResponseDto(String parentCategory, String childCategory, String username) {
         this.parentCategory = parentCategory;
         this.childCategory = childCategory;
-        this.imageUrls = imageUrls;
         this.username = username;
     }
 

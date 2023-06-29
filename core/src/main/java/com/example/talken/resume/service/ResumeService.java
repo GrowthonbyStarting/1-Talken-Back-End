@@ -3,17 +3,16 @@ package com.example.talken.resume.service;
 import com.example.talken.common.Status;
 import com.example.talken.common.security.UserDetailsImpl;
 import com.example.talken.common.util.S3Uploader;
-import com.example.talken.image.dto.ImageRequestDto;
 import com.example.talken.image.entity.Image;
 import com.example.talken.image.repository.ImageRepository;
-import com.example.talken.resume.dto.ResumeListResponseDto;
-import com.example.talken.resume.dto.ResumeRequestDto;
-import com.example.talken.resume.dto.ResumeResponseDto;
+import com.example.talken.resume.dto.response.ResumeDetailResponseDto;
+import com.example.talken.resume.dto.response.ResumeListResponseDto;
+import com.example.talken.resume.dto.request.ResumeRequestDto;
+import com.example.talken.resume.dto.response.ResumeResponseDto;
 import com.example.talken.resume.entity.Resume;
 import com.example.talken.resume.exception.ResumeError;
 import com.example.talken.resume.exception.ResumeException;
 import com.example.talken.resume.repository.ResumeRepository;
-import com.example.talken.resumeImage.dto.ResumeImageRequestDto;
 import com.example.talken.resumeImage.entity.ResumeImage;
 import com.example.talken.resumeImage.repository.ResumeImageRepository;
 import com.example.talken.user.entity.User;
@@ -25,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,6 +68,26 @@ public class ResumeService {
 
         return ResumeListResponseDto.builder()
                 .resumeResponseList(resumeResponseList)
+                .build();
+    }
+
+    public ResumeDetailResponseDto readResumeByUserId(Long resumeId, UserDetailsImpl userDetails) {
+        validateUser(userDetails.getUser());
+
+        Resume resume = resumeRepository.findById(resumeId)
+                .orElseThrow(() -> new ResumeException(ResumeError.RESUME_NOT_FOUND));
+        ResumeResponseDto resumeResponse = ResumeResponseDto.fromEntity(resume);
+
+        List<ResumeImage> imageList = resumeImageRepository.findByResumeId(resume.getId());
+        List<String> imageUrls = new ArrayList<>();
+
+        for(ResumeImage resumeImage : imageList) {
+            imageUrls.add(resumeImage.getImage().getImageUrl());
+        }
+
+        return ResumeDetailResponseDto.builder()
+                .resumeResponse(resumeResponse)
+                .imageUrls(imageUrls)
                 .build();
     }
 
