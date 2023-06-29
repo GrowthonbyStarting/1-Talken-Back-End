@@ -4,6 +4,7 @@ import com.example.talken.common.Status;
 import com.example.talken.common.entity.BaseEntity;
 import com.example.talken.resumeImage.entity.ResumeImage;
 import com.example.talken.user.entity.User;
+import com.example.talken.experience.entity.Experience;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -41,18 +42,23 @@ public class Resume extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "userInfo_id")
+    private Experience experience;
+
     @OneToMany(mappedBy = "resume", cascade = CascadeType.PERSIST)
     private List<ResumeImage> images = new ArrayList<>();
 
     @Builder
     public Resume(String parentCategory, String childCategory, Status.Resume publicStatus,
-                  Status.Feedback feedbackStatus, User user) {
+                  Status.Feedback feedbackStatus, User user, Experience experience) {
 
         this.parentCategory = parentCategory;
         this.childCategory = childCategory;
         this.publicStatus = publicStatus;
         this.feedbackStatus = feedbackStatus;
         this.user = user;
+        this.experience = experience;
     }
 
 }
