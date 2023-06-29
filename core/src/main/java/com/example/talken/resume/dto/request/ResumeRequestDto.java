@@ -1,4 +1,4 @@
-package com.example.talken.resume.dto;
+package com.example.talken.resume.dto.request;
 
 import com.example.talken.common.Status;
 import com.example.talken.resume.entity.Resume;

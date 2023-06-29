@@ -1,9 +1,8 @@
-package com.example.talken.resume.dto;
+package com.example.talken.resume.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
