@@ -5,9 +5,9 @@ import com.example.talken.common.security.UserDetailsImpl;
 import com.example.talken.common.util.S3Uploader;
 import com.example.talken.image.entity.Image;
 import com.example.talken.image.repository.ImageRepository;
+import com.example.talken.resume.dto.request.ResumeRequestDto;
 import com.example.talken.resume.dto.response.ResumeDetailResponseDto;
 import com.example.talken.resume.dto.response.ResumeListResponseDto;
-import com.example.talken.resume.dto.request.ResumeRequestDto;
 import com.example.talken.resume.dto.response.ResumeResponseDto;
 import com.example.talken.resume.entity.Resume;
 import com.example.talken.resume.exception.ResumeError;
@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,7 +74,7 @@ public class ResumeService {
         validateUser(userDetails.getUser());
 
         Resume resume = resumeRepository.findById(resumeId)
-                .orElseThrow(() -> new ResumeException(ResumeError.RESUME_NOT_FOUND));
+                .orElseThrow(() -> new ResumeException(ResumeError.RESUME_NOT_FOUND));;
         ResumeResponseDto resumeResponse = ResumeResponseDto.fromEntity(resume);
 
         List<ResumeImage> imageList = resumeImageRepository.findByResumeId(resume.getId());
@@ -89,6 +88,17 @@ public class ResumeService {
                 .resumeResponse(resumeResponse)
                 .imageUrls(imageUrls)
                 .build();
+    }
+
+    @Transactional
+    public ResumeResponseDto updateResume(Long resumeId, ResumeRequestDto resumeRequest, UserDetailsImpl userDetails) {
+        validateUser(userDetails.getUser());
+
+        Resume resume = resumeRepository.findById(resumeId)
+                .orElseThrow(() -> new ResumeException(ResumeError.RESUME_NOT_FOUND));;
+        resume.update(resumeRequest);
+
+        return ResumeResponseDto.fromEntity(resume);
     }
 
     private User validateUser(User user) {

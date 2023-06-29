@@ -2,11 +2,10 @@ package com.example.talken.resume;
 
 import com.example.talken.common.Response;
 import com.example.talken.common.security.UserDetailsImpl;
+import com.example.talken.resume.dto.request.ResumeRequestDto;
 import com.example.talken.resume.dto.response.ResumeDetailResponseDto;
 import com.example.talken.resume.dto.response.ResumeListResponseDto;
-import com.example.talken.resume.dto.request.ResumeRequestDto;
 import com.example.talken.resume.dto.response.ResumeResponseDto;
-import com.example.talken.resume.repository.ResumeRepository;
 import com.example.talken.resume.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,10 +24,10 @@ public class ResumeController {
     private final ResumeService resumeService;
 
     @PostMapping(value = "", consumes = {"multipart/form-data"})
-    public Response<ResumeResponseDto> createResume(@RequestPart(value = "request") ResumeRequestDto request,
+    public Response<ResumeResponseDto> createResume(@RequestPart(value = "request") ResumeRequestDto resumeRequest,
                                                     @RequestPart(value = "images", required = false) List<MultipartFile> files,
                                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        resumeService.createResume(request, userDetails, files);
+        resumeService.createResume(resumeRequest, userDetails, files);
 
         return Response.<ResumeResponseDto>builder()
                 .code(HttpStatus.OK.value())
@@ -53,6 +52,17 @@ public class ResumeController {
                 .status(HttpStatus.OK.value())
                 .body(Response.<ResumeDetailResponseDto>builder()
                         .data(resumeService.readResumeByUserId(resumeId, userDetails))
+                        .build());
+    }
+
+    @PutMapping("/{resumeId}")
+    public ResponseEntity<Response<ResumeResponseDto>> updateResume(@PathVariable Long resumeId,
+                                                                    @RequestBody ResumeRequestDto resumeRequest,
+                                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity
+                .status(HttpStatus.OK.value())
+                .body(Response.<ResumeResponseDto>builder()
+                        .data(resumeService.updateResume(resumeId, resumeRequest, userDetails))
                         .build());
     }
 

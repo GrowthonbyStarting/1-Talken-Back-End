@@ -2,6 +2,7 @@ package com.example.talken.resume.entity;
 
 import com.example.talken.common.Status;
 import com.example.talken.common.entity.BaseEntity;
+import com.example.talken.resume.dto.request.ResumeRequestDto;
 import com.example.talken.resumeImage.entity.ResumeImage;
 import com.example.talken.user.entity.User;
 import com.example.talken.experience.entity.Experience;
@@ -61,4 +62,9 @@ public class Resume extends BaseEntity {
         this.experience = experience;
     }
 
+    public void update(ResumeRequestDto resumeRequest) {
+        this.parentCategory = resumeRequest.getParentCategory();
+        this.childCategory = resumeRequest.getChildCategory();
+        this.experience = resumeRequest.getExperienceRequest().toEntity();
+    }
 }
