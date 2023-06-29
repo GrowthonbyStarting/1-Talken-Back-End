@@ -57,4 +57,5 @@ jobs:
           docker stop $(docker ps -a -q)
           docker run -d --log-driver=syslog -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/talken-api:latest
           docker rm $(docker ps --filter 'status=exited' -a -q)
+          docker-compose up -d
           docker image prune -a -f
