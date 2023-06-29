@@ -31,7 +31,7 @@ public class Oauth2Service {
         params.add("client_id", "596a5a8e48ed5c14a7e953802ef7adb2");
         params.add("code", authorizedCode);
 
-        params.add("redirect_uri", "http://3.35.135.64:8080/users/oauth");
+        params.add("redirect_uri", "http://3.35.135.64:8080/user/kakao/callback");
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
                 new HttpEntity<>(params, headers);
@@ -44,11 +44,9 @@ public class Oauth2Service {
                 String.class
         );
 
-        ResponseEntity<JSONObject> apiResponse = rt.postForEntity("https://kauth.kakao.com/oauth/token",
-                kakaoTokenRequest, JSONObject.class);
-        JSONObject responseBody = apiResponse.getBody();
-
-        String accessToken = (String) responseBody.get("access_token");
+        String tokenJson = response.getBody();
+        JSONObject rjson = new JSONObject(tokenJson);
+        String accessToken = rjson.getString("access_token");
 
         return accessToken;
     }
@@ -70,10 +68,10 @@ public class Oauth2Service {
 
         JSONObject body = new JSONObject(response.getBody());
         Long id = body.getLong("id");
-        String nickname = body.getJSONObject("properties").getString("nickname");
+        String username = body.getJSONObject("properties").getString("nickname");
         String image = body.getJSONObject("kakao_account").getJSONObject("profile").getString("profile_image_url");
         String email = body.getJSONObject("kakao_account").getString("email");
 
-        return new KakaoUserInfo(id, nickname, image, email);
+        return new KakaoUserInfo(id, username, image, email);
     }
 }
