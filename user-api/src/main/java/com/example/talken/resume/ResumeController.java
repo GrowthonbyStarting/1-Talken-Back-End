@@ -19,11 +19,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/resumes")
 public class ResumeController {
 
     private final ResumeService resumeService;
 
-    @PostMapping(value = "/api/resumes", consumes = {"multipart/form-data"})
+    @PostMapping(value = "", consumes = {"multipart/form-data"})
     public Response<ResumeResponseDto> createResume(@RequestPart(value = "request") ResumeRequestDto request,
                                                     @RequestPart(value = "images", required = false) List<MultipartFile> files,
                                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -34,7 +35,7 @@ public class ResumeController {
                 .build();
     }
 
-    @GetMapping("/api/resumes")
+    @GetMapping("")
     public ResponseEntity<Response<ResumeListResponseDto>> readResumeList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         return ResponseEntity
@@ -45,7 +46,7 @@ public class ResumeController {
 
     }
 
-    @GetMapping("/api/users/resumes/{resumeId}")
+    @GetMapping("/{resumeId}")
     public ResponseEntity<Response<ResumeDetailResponseDto>> readResume(@PathVariable Long resumeId,
                                                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity
