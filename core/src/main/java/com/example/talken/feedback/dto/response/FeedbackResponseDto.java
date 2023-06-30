@@ -1,4 +1,4 @@
-package com.example.talken.feedback.dto;
+package com.example.talken.feedback.dto.response;
 
 import com.example.talken.feedback.entity.Feedback;
 import lombok.Builder;
@@ -16,6 +16,7 @@ public class FeedbackResponseDto {
 
     public static FeedbackResponseDto fromEntity(Feedback feedback) {
         return FeedbackResponseDto.builder()
+                .content(feedback.getContent())
                 .build();
     }
 }

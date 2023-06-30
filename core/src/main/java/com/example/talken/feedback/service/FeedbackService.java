@@ -1,8 +1,9 @@
 package com.example.talken.feedback.service;
 
 import com.example.talken.common.security.UserDetailsImpl;
-import com.example.talken.feedback.dto.FeedbackRequestDto;
-import com.example.talken.feedback.dto.FeedbackResponseDto;
+import com.example.talken.feedback.dto.request.FeedbackRequestDto;
+import com.example.talken.feedback.dto.response.FeedbackListResponseDto;
+import com.example.talken.feedback.dto.response.FeedbackResponseDto;
 import com.example.talken.feedback.entity.Feedback;
 import com.example.talken.feedback.exception.FeedbackError;
 import com.example.talken.feedback.exception.FeedbackException;
@@ -14,6 +15,9 @@ import com.example.talken.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class FeedbackService {
@@ -24,17 +28,39 @@ public class FeedbackService {
 
 
     public FeedbackResponseDto createFeedback(Long resumeId, FeedbackRequestDto requestDto, UserDetailsImpl userDetails) {
-        String email = userDetails.getUser().getEmail();
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new FeedbackException(FeedbackError.INVALID_USER)
-        );
+        User user = validateUser(userDetails.getUser());
 
         Resume resume = resumeRepository.findById(resumeId).orElseThrow(
                 () -> new FeedbackException(FeedbackError.RESUME_NOT_FOUND)
         );
 
-        Feedback feedback = feedbackRepository.save(requestDto.toEntity(user, resume));
+        Feedback feedback = requestDto.toEntity(user, resume);
+        feedbackRepository.save(feedback);
 
         return FeedbackResponseDto.fromEntity(feedback);
     }
+
+    public FeedbackListResponseDto readFeedbackList(Long resumeId, UserDetailsImpl userDetails) {
+        validateUser(userDetails.getUser());
+
+        resumeRepository.findById(resumeId).orElseThrow(
+                () -> new FeedbackException(FeedbackError.RESUME_NOT_FOUND)
+        );
+
+        List<Feedback> feedbackList = feedbackRepository.findByResumeId(resumeId);
+        List<FeedbackResponseDto> feedbackResponseDtoList = feedbackList.stream()
+                .map( feedback -> new FeedbackResponseDto(feedback.getContent()))
+                .collect(Collectors.toList());
+
+        return FeedbackListResponseDto.builder()
+                .feedbackResponseList(feedbackResponseDtoList)
+                .build();
+    }
+
+    private User validateUser(User user) {
+        return userRepository.findByEmail(user.getEmail()).orElseThrow(
+                () -> new FeedbackException(FeedbackError.INVALID_USER)
+        );
+    }
+
 }
