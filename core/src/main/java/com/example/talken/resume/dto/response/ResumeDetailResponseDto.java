@@ -1,7 +1,5 @@
 package com.example.talken.resume.dto.response;
 
-import com.example.talken.feedback.dto.FeedbackResponseDto;
-import com.example.talken.resume.entity.Resume;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
