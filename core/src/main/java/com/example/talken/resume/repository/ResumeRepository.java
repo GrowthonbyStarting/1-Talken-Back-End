@@ -8,6 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ResumeRepository extends JpaRepository<Resume, Long> {
-    List<Resume> findAllByPublicStatus(Status.Resume publicStatus);
-    Optional<Resume> findByUserId(Long userId);
+    List<Resume> findByPublicStatusAndFeedbackStatus(Status.Resume publicStatus, Status.Feedback feedbackStatus);
 }

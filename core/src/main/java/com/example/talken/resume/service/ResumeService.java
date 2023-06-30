@@ -58,7 +58,7 @@ public class ResumeService {
     public ResumeListResponseDto readResumeList(UserDetailsImpl userDetails) {
         validateUser(userDetails.getUser());
 
-        List<Resume> resumeList = resumeRepository.findAllByPublicStatus(publicStatus);
+        List<Resume> resumeList = resumeRepository.findByPublicStatusAndFeedbackStatus(publicStatus, feedbackStatus);
 
         List<ResumeResponseDto> resumeResponseList = new ArrayList<>();
         for(Resume resume : resumeList) {
