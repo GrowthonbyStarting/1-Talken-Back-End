@@ -24,6 +24,7 @@ subprojects {
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.springframework.boot:spring-boot-starter-web:3.0.4'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
@@ -41,7 +42,7 @@ subprojects {
 }
 
 project(':core') {
-//    bootJar { enabled = false }
+    bootJar { enabled = false }
     jar { enabled = true }
 }
 
